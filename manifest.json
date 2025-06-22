@@ -1,0 +1,25 @@
+{
+    "name": "Zoho_time_tracker",
+    "description": "Zoho time tracker",
+    "version": "1.0",
+    "manifest_version": 3,
+    "permissions": [
+        "storage",
+        "activeTab"
+    ],
+    "action": {
+      "default_popup": "index.html",
+      "default_icon": "assets/logo_1.png"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://people.zoho.in/*/zp*"],
+        "js": [
+          "scripts/settings-manager.js",
+          "scripts/utils.js", 
+          "scripts/ui-components.js",
+          "scripts/timer.js"
+        ]
+      }
+    ]
+  }
