@@ -28,14 +28,16 @@ class UIComponents {
 
         if (currentTheme === this.THEMES.LIGHT) {
             // Light theme colors
-            const surfaceColor = isOvertime ? '#FFEBEE' : '#FFFFFF';
-            const primaryColor = isOvertime ? '#F44336' : '#4CAF50';
-            const secondaryColor = isOvertime ? '#FFCDD2' : '#C8E6C9';
+            const surfaceColor = '#FFFFFF';
+            const primaryColor = '#4CAF50';
+            const secondaryColor = '#C8E6C9';
 
             return {
-                backgroundColor: isOvertime
-                    ? `linear-gradient(135deg, ${surfaceColor} 0%, #FFCDD2 100%)`
-                    : `linear-gradient(135deg, ${surfaceColor} 0%, #F5F5F5 100%)`,
+                // backgroundColor: isOvertime
+                //     ? `linear-gradient(135deg, ${surfaceColor} 0%, #FFCDD2 100%)`
+                //     : `linear-gradient(135deg, ${surfaceColor} 0%, #F5F5F5 100%)`,
+                backgroundColor: `linear-gradient(135deg, ${surfaceColor} 0%, #F5F5F5 100%)`,
+
                 primaryColor,
                 secondaryColor,
                 primaryTextColor: 'rgba(0, 0, 0, 0.87)',
@@ -46,14 +48,12 @@ class UIComponents {
             };
         } else {
             // Dark theme colors - using the provided color palette
-            const surfaceColor = isOvertime ? '#2D1B1B' : '#1E1E1E'; // Card/Container color
-            const primaryColor = isOvertime ? '#FF4C4C' : '#4F9DFF'; // Error for overtime, Accent for normal
-            const secondaryColor = isOvertime ? '#FF6B6B' : '#4CAF50'; // Error variant for overtime, Success for normal
+            const surfaceColor = '#1E1E1E'; // Card/Container color
+            const primaryColor = '#4F9DFF'; // Error for overtime, Accent for normal
+            const secondaryColor = '#4CAF50'; // Error variant for overtime, Success for normal
 
             return {
-                backgroundColor: isOvertime
-                    ? `linear-gradient(135deg, ${surfaceColor} 0%, #3D2323 100%)`
-                    : `linear-gradient(135deg, ${surfaceColor} 0%, #2C2C2C 100%)`, // Borders/Dividers color
+                backgroundColor: `linear-gradient(135deg, ${surfaceColor} 0%, #2C2C2C 100%)`, // Borders/Dividers color
                 primaryColor,
                 secondaryColor,
                 primaryTextColor: '#FFFFFF', // Primary Text color
@@ -97,7 +97,7 @@ class UIComponents {
 
     createStatusMessage(isOvertime, overtimeMs, remainingMs, colors, formatDuration) {
         if (isOvertime) {
-            return `<div style="font-size: 14px; margin-bottom: 6px; font-weight: 500; color: ${colors.secondaryColor};">
+            return `<div style="font-size: 14px; margin-bottom: 6px; font-weight: 500; color: ${colors.secondaryTextColor};">
                 ⏰ Overtime: ${formatDuration(overtimeMs)}
             </div>`;
         } else {
@@ -169,17 +169,17 @@ class UIComponents {
                         position: relative;">
                 ${themeToggleButton}
                 <div style="font-weight: 500; font-size: 15px; margin-bottom: 8px; color: ${colors.primaryTextColor};">
-                    ${isOvertime ? '🔴 Work Complete!' : 'Checkout Time:'} ${formattedTime}
+                    ${isOvertime ? 'Work Complete!' : 'Checkout Time:'} ${formattedTime}
                 </div>
                 ${statusMessage}
                 ${progressBar}
                 <div style="font-size: 13px; color: ${colors.secondaryTextColor};">
                     Progress: ${progressPercentage.toFixed(1)}% ${isOvertime ? '(Overtime!)' : 'complete'}
                 </div>
-                ${settingsInfo}
-            </div>
-        `;
-    }
+                </div>
+                `;
+            }
+            // ${settingsInfo}
 
     createCheckoutElement() {
         const container = document.querySelector('.zpl_mspchkinout');
