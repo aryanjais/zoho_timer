@@ -2,7 +2,9 @@
 
 A Chrome extension that enhances the Zoho People attendance page with an intelligent timer showing checkout time, work progress, and overtime tracking.
 
-![Extension Logo](assets/timer_logo.png)
+<div align="center">
+  <img src="assets/timer_logo.png" alt="Extension Logo" width="120" height="120">
+</div>
 
 ## 🚀 Features
 
@@ -157,11 +159,13 @@ If you encounter any issues or have feature requests:
 ## 📸 Screenshots
 
 ### Settings Popup
-![Settings Popup](screenshots/ss1.png)
+<img src="screenshots/ss1.png" alt="Settings Popup" width="400">
+
 *Configure your work hours, time format, and update intervals*
 
-### Timer Display on Zoho People
-![Timer Display](screenshots/ss2.png)
+### Timer Display on Zoho People  
+<img src="screenshots/ss2.png" alt="Timer Display" width="600">
+
 *Enhanced timer showing checkout time and progress*
 
 
