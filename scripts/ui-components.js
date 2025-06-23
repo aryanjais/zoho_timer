@@ -45,21 +45,21 @@ class UIComponents {
                 progressBg: 'rgba(0,0,0,0.08)'
             };
         } else {
-            // Dark theme colors
-            const surfaceColor = isOvertime ? '#2D1B1B' : '#1E1E1E';
-            const primaryColor = isOvertime ? '#FF6B6B' : '#4CAF50';
-            const secondaryColor = isOvertime ? '#FFCDD2' : '#C8E6C9';
+            // Dark theme colors - using the provided color palette
+            const surfaceColor = isOvertime ? '#2D1B1B' : '#1E1E1E'; // Card/Container color
+            const primaryColor = isOvertime ? '#FF4C4C' : '#4F9DFF'; // Error for overtime, Accent for normal
+            const secondaryColor = isOvertime ? '#FF6B6B' : '#4CAF50'; // Error variant for overtime, Success for normal
 
             return {
                 backgroundColor: isOvertime
                     ? `linear-gradient(135deg, ${surfaceColor} 0%, #3D2323 100%)`
-                    : `linear-gradient(135deg, ${surfaceColor} 0%, #2C2C2C 100%)`,
+                    : `linear-gradient(135deg, ${surfaceColor} 0%, #2C2C2C 100%)`, // Borders/Dividers color
                 primaryColor,
                 secondaryColor,
-                primaryTextColor: 'rgba(255, 255, 255, 1.0)',
-                secondaryTextColor: 'rgba(255, 255, 255, 0.7)',
+                primaryTextColor: '#FFFFFF', // Primary Text color
+                secondaryTextColor: '#B0B0B0', // Secondary Text color
                 shadow: '0 4px 12px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.6)',
-                border: 'rgba(255,255,255,0.12)',
+                border: '#2C2C2C', // Borders/Dividers color
                 progressBg: 'rgba(255,255,255,0.08)'
             };
         }
@@ -68,28 +68,28 @@ class UIComponents {
     createThemeToggleButton(colors, currentTheme) {
         const toggleIcon = currentTheme === this.THEMES.DARK ? '☀️' : '🌙';
         return `
-            <button id="theme-toggle-btn" style="
-                position: absolute;
-                bottom: 8px;
-                right: 8px;
-                background: ${colors.primaryColor};
-                color: white;
-                border: none;
-                border-radius: 50%;
-                width: 20px;
-                height: 20px;
-                cursor: pointer;
-                font-size: 12px;
-                padding: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all 0.3s ease;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.2);"
-                onmouseover="this.style.transform='scale(1.15)'"
-                onmouseout="this.style.transform='scale(1)'"
-                onclick="window.zohoTimerToggleTheme()"
-                title="Toggle ${currentTheme === this.THEMES.DARK ? 'Light' : 'Dark'} Mode">
+            <button id="theme-toggle-btn" 
+                    data-action="toggle-theme"
+                    style="position: absolute;
+                           bottom: 8px;
+                           right: 8px;
+                           background: ${colors.primaryColor};
+                           color: white;
+                           border: none;
+                           border-radius: 50%;
+                           width: 20px;
+                           height: 20px;
+                           cursor: pointer;
+                           font-size: 12px;
+                           padding: 0;
+                           display: flex;
+                           align-items: center;
+                           justify-content: center;
+                           transition: all 0.3s ease;
+                           box-shadow: 0 1px 3px rgba(0,0,0,0.2);"
+                    onmouseover="this.style.transform='scale(1.15)'"
+                    onmouseout="this.style.transform='scale(1)'"
+                    title="Toggle ${currentTheme === this.THEMES.DARK ? 'Light' : 'Dark'} Mode">
                 ${toggleIcon}
             </button>
         `;
@@ -125,9 +125,14 @@ class UIComponents {
     }
 
     createSettingsInfo(workHours, timeFormat, colors) {
+        // Format work hours to show hours and minutes
+        const hours = Math.floor(workHours);
+        const minutes = Math.round((workHours - hours) * 60);
+        const timeText = minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
+        
         return `
             <div style="font-size: 11px; color: ${colors.secondaryTextColor}; margin-top: 8px; padding-top: 8px; border-top: 1px solid ${colors.border};">
-                ⚙️ Work hours: ${workHours}h | Format: ${timeFormat === '12' ? '12h' : '24h'}
+                ⚙️ Work hours: ${timeText} | Format: ${timeFormat === '12' ? '12h' : '24h'}
             </div>
         `;
     }

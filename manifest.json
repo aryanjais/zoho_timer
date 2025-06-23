@@ -9,7 +9,7 @@
     ],
     "action": {
       "default_popup": "index.html",
-      "default_icon": "assets/logo_1.png"
+      "default_icon": "assets/timer_logo.png"
     },
     "content_scripts": [
       {

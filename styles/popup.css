@@ -3,7 +3,7 @@ body {
     width: 320px;
     min-height: 400px;
     margin: 0;
-    padding: 20px;
+    padding: 2px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -39,6 +39,17 @@ body {
     margin-bottom: 20px;
 }
 
+.form-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
 .form-group label {
     display: block;
     margin-bottom: 8px;
@@ -53,7 +64,7 @@ body {
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.9);
     color: #333;
-    font-size: 14px;
+    font-size: 12px;
     box-sizing: border-box;
     transition: all 0.3s ease;
 }
@@ -66,31 +77,42 @@ body {
 
 .time-input-group {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
 }
 
 .time-input-group input {
-    flex: 1;
+    width: 60px;
+    text-align: center;
 }
 
 .time-input-group span {
     font-weight: 500;
     color: rgba(255, 255, 255, 0.9);
+    font-size: 12px;
+    min-width: 40px;
 }
 
-.save-btn {
-    width: 100%;
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.save-btn, .refresh-btn {
+    flex: 1;
     padding: 14px;
-    background: linear-gradient(135deg, #4CAF50, #45a049);
-    color: white;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 10px;
+}
+
+.save-btn {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
 }
 
 .save-btn:hover {
@@ -102,9 +124,28 @@ body {
     transform: translateY(0);
 }
 
+.refresh-btn {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: white;
+}
+
+.refresh-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+}
+
+.refresh-btn:active {
+    transform: translateY(0);
+}
+
+.refresh-btn:disabled {
+    background: linear-gradient(135deg, #9E9E9E, #757575);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
 .status {
-    margin-top: 16px;
-    padding: 12px;
     border-radius: 8px;
     text-align: center;
     font-size: 14px;
@@ -113,12 +154,16 @@ body {
 }
 
 .status.success {
+    margin-top: 16px;
+    padding: 12px;
     background: rgba(76, 175, 80, 0.2);
     border: 1px solid rgba(76, 175, 80, 0.3);
     opacity: 1;
 }
 
 .status.error {
+    margin-top: 16px;
+    padding: 12px;
     background: rgba(244, 67, 54, 0.2);
     border: 1px solid rgba(244, 67, 54, 0.3);
     opacity: 1;

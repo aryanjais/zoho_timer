@@ -1,3 +1,17 @@
+// Global theme toggle function - must be defined before timer initialization
+let globalTimerInstance = null;
+let globalUIInstance = null;
+
+window.zohoTimerToggleTheme = function() {
+	if (globalUIInstance && globalTimerInstance) {
+		globalUIInstance.toggleTheme();
+		globalTimerInstance.updateDisplay();
+		console.log('Theme toggled successfully');
+	} else {
+		console.error('Timer or UI instance not available for theme toggle');
+	}
+};
+
 // Main Timer Controller for Zoho Timer
 const getTimer = function() {
 	// Initialize components
@@ -67,6 +81,17 @@ const getTimer = function() {
 				};
 
 				state.checkoutElement.innerHTML = ui.createMainDisplay(displayData);
+				
+				// Add event listener to the theme toggle button after it's created
+				setTimeout(() => {
+					const toggleBtn = state.checkoutElement.querySelector('#theme-toggle-btn');
+					if (toggleBtn) {
+						toggleBtn.addEventListener('click', (e) => {
+							e.preventDefault();
+							window.zohoTimerToggleTheme();
+						});
+					}
+				}, 100);
 			} catch (error) {
 				console.error('Error updating display:', error);
 				if (state.checkoutElement) {
@@ -94,10 +119,40 @@ const getTimer = function() {
 			} catch (error) {
 				console.error('Failed to initialize timer:', error);
 			}
+		},
+
+		async refreshUI() {
+			try {
+				console.log('Refreshing UI with current settings...');
+				
+				// Reload settings
+				await settingsManager.loadSettings();
+				state.settingsLoaded = true;
+				
+				// Update display with new settings
+				this.updateDisplay();
+				
+				// Restart refresh interval with new settings
+				if (state.refreshInterval) {
+					clearInterval(state.refreshInterval);
+				}
+				
+				state.refreshInterval = setInterval(() => {
+					this.updateDisplay();
+				}, settingsManager.getRefreshInterval());
+				
+				console.log('UI refreshed successfully with settings:', settingsManager.getConfig());
+			} catch (error) {
+				console.error('Failed to refresh UI:', error);
+			}
 		}
 	};
 
-	// Message listener for settings updates
+	// Store references globally for theme toggle access - AFTER timer is defined
+	globalTimerInstance = timer;
+	globalUIInstance = ui;
+
+	// Message listener for settings updates and UI refresh
 	chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 		if (message.action === 'updateSettings') {
 			settingsManager.updateSettings(message.settings);
@@ -110,6 +165,9 @@ const getTimer = function() {
 				timer.init();
 			}
 			
+			sendResponse({ success: true });
+		} else if (message.action === 'refreshUI') {
+			timer.refreshUI();
 			sendResponse({ success: true });
 		}
 	});
@@ -151,12 +209,6 @@ const getTimer = function() {
 		state.pollInterval = setInterval(checkForElements, settingsManager.getPollInterval());
 		console.log('Enhanced Zoho Timer started with settings:', settingsManager.getConfig());
 	}
-
-	// Global theme toggle function
-	window.zohoTimerToggleTheme = function() {
-		ui.toggleTheme();
-		timer.updateDisplay();
-	};
 
 	// Cleanup on page unload
 	window.addEventListener('beforeunload', () => {
